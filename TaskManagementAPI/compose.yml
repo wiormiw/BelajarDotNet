@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: taskdb
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+  # this configuration for api if you want to run it in docker
+  # api:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     - ASPNETCORE_URLS=http://+:80
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Username=myuser;Password=mypassword;Database=taskdb
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - app-network
+  #   ports:
+  #     - "8080:80"
+  #   restart: always
+
+networks:
+  app-network:
+    driver: bridge
